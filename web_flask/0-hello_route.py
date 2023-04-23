@@ -1,15 +1,25 @@
 #!/usr/bin/python3
-"""script that starts a Flask web application"""
+# importing flask
+'''
+script that starts a Flask web application
+'''
 from flask import Flask
+
 
 app = Flask(__name__)
 
+# app decorator for routing
+
+
 @app.route('/', strict_slashes=False)
-def hello_hbnb():
-    """print a message"""
-    return "Hello HBNB!"
+def hello():
+    '''
+    simple route
+    Returns:
+        str : Hello HBNB!
+    '''
+    return 'Hello HBNB!'
 
-if __name__ == '__main__':
-    """main fun"""
-    app.run(host='0.0.0.0', port=5000)
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
