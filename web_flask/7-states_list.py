@@ -1,28 +1,31 @@
 #!/usr/bin/python3
-""" Starts a Flash Web Application """
+'''
+    script that starts a Flask web application:
+'''
+
+from flask import Flask, render_template
+
+# importing storage and state
+
 from models import storage
 from models.state import State
-from flask import Flask, render_template
+
 app = Flask(__name__)
-# app.jinja_env.trim_blocks = True
-# app.jinja_env.lstrip_blocks = True
 
 
 @app.teardown_appcontext
-def close_db(error):
-    """ Remove old SQLAlchemy Session """
+def tearDown(self):
+    ''' remove the current SQLAlchemy Session '''
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
-def states_list():
-    """ displays a HTML page """
-    states = storage.all(State).values()
-    states = sorted(states, key=lambda k: k.name)
+def listStates():
+    ''' lists States '''
+    states = list(storage.all(State).values())
     return render_template('7-states_list.html', states=states)
 
 
-if __name__ == "__main__":
-    """ Main Function """
+if __name__ == '__main__':
+    storage.reload()
     app.run(host='0.0.0.0', port=5000)
-
